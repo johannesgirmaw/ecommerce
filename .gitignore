@@ -4,5 +4,3 @@ commons/__pycache__/
 commons/authentication/__pycache__/
 commons/migrations/
 ecommerce_backend/__pycache__/
-
-staticfiles/

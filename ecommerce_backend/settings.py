@@ -92,13 +92,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+LOGIN_REDIRECT_URL = '/admin'
 ROOT_URLCONF = 'ecommerce_backend.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'applications', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

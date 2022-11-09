@@ -22,8 +22,11 @@ from drf_spectacular.views import (
 )
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views  # new
 
 urlpatterns = [
+    path('admin/login/',
+         auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('admin/', admin.site.urls),
     path('commons/', include("commons.urls")),
     path('applications/', include("applications.urls")),

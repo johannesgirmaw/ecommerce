@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'corsheaders',
     "drf_spectacular",
+    'django_filters',
     # Local
     'commons.apps.CommonsConfig',
     'commons.authentication.apps.AuthenticationConfig',
@@ -59,7 +60,7 @@ INSTALLED_APPS = [
     'applications.category.apps.CategoryConfig',
     'applications.sub_category.apps.SubCategoryConfig',
     'applications.product.apps.ProductConfig',
-
+    'applications.order.apps.OrderConfig',
 ]
 
 REST_FRAMEWORK = {
@@ -77,6 +78,8 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 
     "EXCEPTION_HANDLER": "commons.urls.api_exception_handler",
+
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -177,7 +180,7 @@ JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
 STATIC_URL = '/static/'
 # STATICFILES_DIRS = [BASE_DIR / "static"]  # new
 STATIC_ROOT = BASE_DIR / "staticfiles"  # new
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/'), ]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # new
 # Default primary key field type

@@ -31,7 +31,6 @@ class MyOrderSerializer(serializers.ModelSerializer):
             "place",
             "phone",
             "items",
-            "order_status",
             "total_amount"
         )
 
@@ -60,7 +59,6 @@ class OrderSerializer(serializers.ModelSerializer):
             "place",
             "phone",
             "items",
-            "order_status",
             "total_amount"
         )
 
@@ -70,7 +68,7 @@ class OrderSerializer(serializers.ModelSerializer):
         print("validated_data:------", validated_data)
 
         order = Order.objects.create(**validated_data)
-        print("order:", order)
+
         for item_data in items_data:
             OrderItem.objects.create(order=order, **item_data)
 

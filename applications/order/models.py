@@ -6,11 +6,6 @@ from commons.authentication.models import CustomUser
 
 
 class Order(models.Model):
-    status_types = (
-        (1, "Submitted"),
-        (2, "Ongoing"),
-        (3, "Received"),
-    )
     user = models.ForeignKey(
         CustomUser, related_name='orders', on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100)
@@ -22,8 +17,8 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     total_amount = models.DecimalField(
         max_digits=8, decimal_places=2, blank=True, null=True)
-    # stripe_token = models.CharField(max_length=100)
-    order_status = models.IntegerField(choices=status_types, default=1)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    quantity = models.IntegerField(default=1)
 
     class Meta:
         ordering = ['-created_at', ]

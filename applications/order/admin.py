@@ -5,7 +5,7 @@ from .models import Order
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('user', 'first_name', 'last_name', 'email',
-                    'address', 'place', 'phone', 'order_status', 'created_at',)
+                    'address', 'place', 'phone', 'created_at',)
 
 
 admin.site.register(Order, OrderAdmin)

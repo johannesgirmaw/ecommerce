@@ -117,7 +117,7 @@ CORS_ALLOWED_ORIGINS = (
     "http://localhost:8000",
 )
 CORS_ALLOWED_ORIGINS = ("*")
-CSRF_TRUSTED_ORIGINS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["https://ecommerce-production-5d09.up.railway.app/"]
 # CORS_ALLOW_ALL_ORIGINS = True
 
 # dependencies = [

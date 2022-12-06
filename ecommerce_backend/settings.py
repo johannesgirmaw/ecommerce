@@ -116,9 +116,9 @@ TEMPLATES = [
 #     "http://localhost:3000",
 #     "http://localhost:8000",
 # )
-CORS_ALLOWED_ORIGINS = ("https://ecommerce-production-5d09.up.railway.app/")
+# CORS_ALLOWED_ORIGINS = ("https://ecommerce-production-5d09.up.railway.app/")
 CSRF_TRUSTED_ORIGINS = ["https://ecommerce-production-5d09.up.railway.app/"]
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # dependencies = [
 #     # migrations.swappable_dependency(settings.AUTH_USER_MODEL),

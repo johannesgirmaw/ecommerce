@@ -88,7 +88,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -117,7 +117,7 @@ TEMPLATES = [
 #     "http://localhost:8000",
 # )
 # CORS_ALLOWED_ORIGINS = ("https://ecommerce-production-5d09.up.railway.app/")
-CSRF_TRUSTED_ORIGINS = ["https://ecommerce-production-5d09.up.railway.app/"]
+# CSRF_TRUSTED_ORIGINS = ["https://ecommerce-production-5d09.up.railway.app/"]
 CORS_ALLOW_ALL_ORIGINS = True
 
 # dependencies = [

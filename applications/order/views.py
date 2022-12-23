@@ -1,52 +1,46 @@
 
-from django.conf import settings
-from django.contrib.auth.models import User
+from applications.category.models import Category
+from rest_framework import generics
 from django.http import Http404
-from django.shortcuts import render
-from ..product.models import Product
 
 from rest_framework import status, authentication, permissions
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import Order, OrderItem
+from .models import Order
 from .serializers import OrderSerializer, MyOrderSerializer
 
+# Do the validation for the product qauntity if it is finished
+# and update the quantity of the product
 
-@api_view(['POST'])
-# @authentication_classes([authentication.TokenAuthentication])
-# @permission_classes([permissions.IsAuthenticated])
-def checkout(request):
-    print(request.data)
-    serializer = OrderSerializer(data=request.data)
-    items = []
-    if serializer.is_valid():
-        print("serializer-------------------", serializer)
-        total_amount = sum(item.get(
-            'quantity') * item.get('product').total_price for item in serializer.validated_data['items'])
-        print(total_amount)
-        if len(serializer.validated_data['items']) > 0:
-            for item in serializer.validated_data['items']:
-                price = item.get('price')
-                product = item.get('product')
-                quantity = item.get('quantity')
-                print("item:", item)
-                # product = Product.objects.get(pk=item.get('product'))
-                item = {"price": price, "product": product,
-                        "quantity": quantity}
-                items.append(item)
-        else:
-            items = []
-        # try:
-        serializer.save(items=items,
-                        user=request.user, total_amount=total_amount)
-        print("serializer1:", serializer)
-        # return Response(serializer.data, status=status.HTTP_201_CREATED)
-        # except Exception:
-        # return Response(serializer.data)
 
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class OrderCheckout(generics.CreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+    def perform_create(self, serializer):
+        print("Hello there--------------------------", serializer)
+
+        serializer = OrderSerializer(data=self.request.data)
+        items = []
+        if serializer.is_valid():
+
+            total_amount = sum(item.get(
+                'quantity') * item.get('product').total_price for item in serializer.validated_data['items'])
+
+            if len(serializer.validated_data['items']) > 0:
+                print(serializer.validated_data)
+                for item in serializer.validated_data['items']:
+                    product = item.get('product')
+                    quantity = item.get('quantity')
+                    item = {"product": product,
+                            "quantity": quantity}
+                    items.append(item)
+            else:
+                items = []
+            serializer.save(items=items,
+                            user=self.request.user, total_amount=total_amount)
 
 
 class OrdersList(APIView):
@@ -57,3 +51,18 @@ class OrdersList(APIView):
         orders = Order.objects.filter(user=request.user)
         serializer = MyOrderSerializer(orders, many=True)
         return Response(serializer.data)
+
+
+class OrdersDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_classes = [permissions.IsAuthenticated]
+
+    # def get(self, pk, format=None):
+    #     orders = Order.objects.filter(pk=pk, user=self.request.user)
+    #     serializer = MyOrderSerializer(orders, many=True)
+    #     return Response(serializer.data)
+
+    def perform_update(self, request, serializer):
+        print(self, request, serializer)

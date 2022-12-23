@@ -11,7 +11,8 @@ class MyOrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = (
-            "price",
+            "id",
+            "order",
             "product",
             "quantity",
         )
@@ -31,7 +32,10 @@ class MyOrderSerializer(serializers.ModelSerializer):
             "place",
             "phone",
             "items",
-            "total_amount"
+            'order_status',
+            "total_amount",
+            'created_at',
+            'updated_at'
         )
 
 
@@ -39,7 +43,8 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = (
-            "price",
+            "id",
+            "order",
             "product",
             "quantity",
         )
@@ -59,17 +64,29 @@ class OrderSerializer(serializers.ModelSerializer):
             "place",
             "phone",
             "items",
-            "total_amount"
+            'order_status',
+            "total_amount",
+            'created_at',
+            'updated_at'
+
         )
 
     def create(self, validated_data):
         items_data = validated_data.pop('items')
-        print("items_data:-----", items_data)
-        print("validated_data:------", validated_data)
-
+        print("items_data-------------------:", items_data)
         order = Order.objects.create(**validated_data)
 
         for item_data in items_data:
             OrderItem.objects.create(order=order, **item_data)
 
         return order
+
+    # def create(self, validated_data):
+    #     items_data = validated_data.pop('items')
+
+    #     order = Order.objects.create(**validated_data)
+
+    #     for item_data in items_data:
+    #         OrderItem.objects.update(order=order, **item_data)
+
+    #     return order

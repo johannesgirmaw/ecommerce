@@ -8,12 +8,14 @@ from rest_framework.decorators import api_view
 from django.db.models import Q
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated
 
 
 class ProductList(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [filters.SearchFilter]
+    permission_classes = [IsAuthenticated]
     search_fields = ['product_name', 'description',
                      'total_price', 'id']
 

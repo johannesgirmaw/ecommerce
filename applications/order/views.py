@@ -10,6 +10,7 @@ from rest_framework.response import Response
 
 from .models import Order
 from .serializers import OrderSerializer, MyOrderSerializer
+from rest_framework.permissions import IsAuthenticated
 
 # Do the validation for the product qauntity if it is finished
 # and update the quantity of the product
@@ -18,10 +19,9 @@ from .serializers import OrderSerializer, MyOrderSerializer
 class OrderCheckout(generics.CreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        print("Hello there--------------------------", serializer)
-
         serializer = OrderSerializer(data=self.request.data)
         items = []
         if serializer.is_valid():
@@ -44,8 +44,7 @@ class OrderCheckout(generics.CreateAPIView):
 
 
 class OrdersList(APIView):
-    # authentication_classes = [authentication.TokenAuthentication]
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
         orders = Order.objects.filter(user=request.user)
@@ -56,8 +55,7 @@ class OrdersList(APIView):
 class OrdersDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    # authentication_classes = [authentication.TokenAuthentication]
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     # def get(self, pk, format=None):
     #     orders = Order.objects.filter(pk=pk, user=self.request.user)

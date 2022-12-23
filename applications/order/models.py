@@ -23,8 +23,9 @@ class Order(models.Model):
     phone = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    total_amount = models.DecimalField(decimal_places=2, blank=True, null=True)
-    price = models.DecimalField(decimal_places=2, null=True)
+    total_amount = models.DecimalField(
+        max_digits=1000, decimal_places=2, blank=True, null=True)
+    price = models.DecimalField(max_digits=1000, decimal_places=2, null=True)
     # quantity = models.IntegerField(default=1)
 
     order_status = models.IntegerField(
